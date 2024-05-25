@@ -52,6 +52,7 @@ Press 'Start' to begin the TESTING experiment.
         random.shuffle(self.digits)
 
         self.testing_experiment = False
+        self.headset.annotate_event("real experiment start")
         self.root.after(10000, self.show_blank_screen)
 
 
@@ -71,8 +72,7 @@ Press 'Start' to begin the TESTING experiment.
                 return
 
         self.clear_screen()
-        if not self.testing_experiment:
-            self.headset.annotate_event("fixation cross")
+        self.headset.annotate_event("fixation cross")
         print("event: fixation cross")
 
         fixation_label = tk.Label(self.root, text="+", font=('Helvetica', 128))
@@ -82,8 +82,7 @@ Press 'Start' to begin the TESTING experiment.
 
     def show_digit(self):
         digit = self.digits.pop(0)
-        if not self.testing_experiment:
-            self.headset.annotate_event(f"digit {digit} shown")
+        self.headset.annotate_event(f"digit {digit} shown")
         print(f"event: digit {digit} shown")
 
         self.clear_screen()
@@ -94,8 +93,7 @@ Press 'Start' to begin the TESTING experiment.
 
     def show_blank_screen(self):
         self.clear_screen()
-        if not self.testing_experiment:
-            self.headset.annotate_event("blank screen")
+        self.headset.annotate_event("blank screen")
         print("event: blank screen")
 
         blank_duration = random.randint(4000, 5000)  # Blank screen for 4 to 5 seconds
