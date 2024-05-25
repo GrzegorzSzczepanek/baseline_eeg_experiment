@@ -67,7 +67,7 @@ class EEGHeadset:
         Raises:
             RuntimeError: If block was not started.
         """
-        
+
         # Pobranie danych EEG
         self._eeg_acquisition.get_mne()
 

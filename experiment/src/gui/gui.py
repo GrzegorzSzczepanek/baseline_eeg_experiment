@@ -10,8 +10,8 @@ class EEGExperiment:
         self.root.geometry("800x600")
 
         self.headset = EEGHeadset(participant_id)
-        self.digits = [1, 2, 3, 4] # * 20
-        # self.digits = [1] # * 20
+        self.digits = [1, 2, 3, 4] * 2 # testing experiment digits
+        self.testing_experiment = True
 
         random.shuffle(self.digits)
 
@@ -20,52 +20,72 @@ class EEGExperiment:
     def info_screen(self):
         self.clear_screen()
 
-        info_text = (
-            "Welcome to the EEG Digit Imagination Experiment\n\n"
-            "In this experiment, you will see digits displayed on the screen.\n"
-            "Your task is to imagine the digit vividly in your mind while it is displayed.\n"
-            "The experiment consists of the following steps:\n"
-            "1. A fixation cross will appear for 1 second.\n"
-            "2. A digit will be displayed for 8 seconds. Imagine this digit as clearly as possible.\n"
-            "3. A blank screen will follow for a random duration between 4 to 5 seconds.\n"
-            "This sequence will repeat until all digits have been displayed.\n\n"
-            "Press 'Start' to begin the experiment. The first screen will be displayed for 1 minute with this information."
-        )
+        info_text = """
+Welcome to the EEG Digit Imagination Experiment
 
-        info_label = tk.Label(self.root, text=info_text, font=('Helvetica', 14), justify='left', wraplength=750)
+In this experiment, you will see digits displayed on the screen.
+Your task is to imagine the digit vividly in your mind while it is displayed.
+The experiment consists of the following steps:
+1. A fixation cross will appear for 1 second.
+2. A digit will be displayed for 8 seconds. Imagine this digit as clearly as possible.
+3. A blank screen will follow for a random duration between 4 to 5 seconds.
+This sequence will repeat until all digits have been displayed.
+
+Press 'Start' to begin the TESTING experiment.
+        """
+
+        info_label = tk.Label(self.root, text=info_text, font=('Helvetica', 18), justify='left', wraplength=750)
         info_label.pack(expand=True)
 
-        start_button = tk.Button(self.root, text="Start", command=self.start_experiment, font=('Helvetica', 14))
+        start_button = tk.Button(self.root, text="Start TESTING experiment", command=self.start_testing_experiment, font=('Helvetica', 14))
         start_button.pack(pady=20)
 
-    def start_experiment(self):
+    def real_experiment_start(self):
         self.clear_screen()
+
+        info_text = """ In 10 seconds the REAL experiment will start. """
+
+        info_label = tk.Label(self.root, text=info_text, font=('Helvetica', 18), justify='left', wraplength=750)
+        info_label.pack(expand=True)
+
+        self.digits = [1, 2, 3, 4] * 10
+        random.shuffle(self.digits)
+
         self.headset.start_experiment()
-        self.root.after(1000, self.show_fixation_cross)  # Display the info screen for 1 minute
+        self.testing_experiment = False
+        self.root.after(10000, self.show_blank_screen)
+
+
+    def start_testing_experiment(self):
+        self.clear_screen()
+        self.root.after(3000, self.show_fixation_cross)  # Display the info screen for 1 minute
 
     def show_fixation_cross(self):
         if not self.digits:
-            self.thank_you_screen()
-            return
+            if self.testing_experiment:
+                print("real experiment start")
+                self.real_experiment_start()
+                return
+            else:
+                self.thank_you_screen()
+                return
 
         self.clear_screen()
         self.headset.annotate_event("fixation cross")
+        print("event: fixation cross")
 
-        fixation_label = tk.Label(self.root, text="+", font=('Helvetica', 48))
+        fixation_label = tk.Label(self.root, text="+", font=('Helvetica', 128))
         fixation_label.pack(expand=True)
 
         self.root.after(1000, self.show_digit)  # Show fixation cross for 1 second
 
     def show_digit(self):
-        if not self.digits:
-            self.thank_you_screen()
-            return
-
         digit = self.digits.pop(0)
         self.headset.annotate_event(f"digit {digit} shown")
+        print(f"event: digit {digit} shown")
 
         self.clear_screen()
-        digit_label = tk.Label(self.root, text=str(digit), font=('Helvetica', 48))
+        digit_label = tk.Label(self.root, text=str(digit), font=('Helvetica', 128))
         digit_label.pack(expand=True)
 
         self.root.after(8000, self.show_blank_screen)  # Show digit for 8 seconds
@@ -73,6 +93,7 @@ class EEGExperiment:
     def show_blank_screen(self):
         self.clear_screen()
         self.headset.annotate_event("blank screen")
+        print("event: blank screen")
 
         blank_duration = random.randint(4000, 5000)  # Blank screen for 4 to 5 seconds
         self.root.after(blank_duration, self.show_fixation_cross)
