@@ -64,19 +64,27 @@ class EEGHeadset:
 
     def stop_and_save_experiment(self) -> None:
         """
-        Stop the EEG acquisition and save the data.
+        Raises:
+            RuntimeError: If block was not started.
         """
+        
+        # Pobranie danych EEG
+        self._eeg_acquisition.get_mne()
 
-        if not self._is_started:
-            raise RuntimeError("Experiment has not been started.")
-
-        # Stop acquisition and save data
-        self._eeg_acquisition.stop_acquisition()
-        file_path = os.path.join(self._save_dir_path, "EEG_experiment_raw.fif")
+        # Zapisanie danych do pliku
+        file_path = os.path.join(
+            self._save_dir_path, f"EEG_raw.fif"
+        )
         self._eeg_acquisition.data.save(file_path)
 
         self._is_started = False
+
+        # przerwanie akwizycji
+        self._eeg_acquisition.stop_acquisition()
+        self._eeg_manager.clear_annotations()
         self._disconnect()
+
+
 
     def annotate_event(self, event: str) -> None:
         """

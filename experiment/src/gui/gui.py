@@ -1,6 +1,6 @@
 import tkinter as tk
 import random
-from eeg_headset import EEGHeadset
+from ..eeg_headset import EEGHeadset
 
 
 class EEGExperiment:
@@ -10,7 +10,9 @@ class EEGExperiment:
         self.root.geometry("800x600")
 
         self.headset = EEGHeadset(participant_id)
-        self.digits = [1, 2, 3, 4] * 20
+        self.digits = [1, 2, 3, 4] # * 20
+        # self.digits = [1] # * 20
+
         random.shuffle(self.digits)
 
         self.info_screen()
@@ -39,7 +41,7 @@ class EEGExperiment:
     def start_experiment(self):
         self.clear_screen()
         self.headset.start_experiment()
-        self.root.after(60000, self.show_fixation_cross)  # Display the info screen for 1 minute
+        self.root.after(1000, self.show_fixation_cross)  # Display the info screen for 1 minute
 
     def show_fixation_cross(self):
         if not self.digits:
@@ -85,9 +87,3 @@ class EEGExperiment:
 
         thank_you_label = tk.Label(self.root, text="Thank you for your participation!", font=('Helvetica', 24))
         thank_you_label.pack(expand=True)
-
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = EEGExperiment(root, "participant_id")
-    root.mainloop()
