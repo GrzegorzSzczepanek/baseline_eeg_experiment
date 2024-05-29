@@ -3,8 +3,8 @@ import tkinter as tk
 
 if __name__ == "__main__":
     root = tk.Tk()
-        
-    app = EEGExperiment(root=root, participant_id="P001")
+    participant_id = input("Enter participant ID: ")
+    app = EEGExperiment(root=root, participant_id=participant_id)
     # app.start()
 
     root.mainloop()

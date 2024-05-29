@@ -17,6 +17,7 @@ class EEGHeadset:
 
         self._is_started: bool = False
         self._is_connected: bool = False
+        self._participant_id: str = participant_id
 
         self._save_dir_path: str = os.path.join(DATA_FOLDER_PATH, participant_id)
         # Initialization of the library
@@ -73,7 +74,7 @@ class EEGHeadset:
 
         # Zapisanie danych do pliku
         file_path = os.path.join(
-            self._save_dir_path, f"EEG_raw.fif"
+            self._save_dir_path, f"{self._participant_id}.fif"
         )
         self._eeg_acquisition.data.save(file_path)
 

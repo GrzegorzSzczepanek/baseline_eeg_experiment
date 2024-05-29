@@ -10,7 +10,7 @@ class EEGExperiment:
         self.root.geometry("800x600")
 
         self.headset = EEGHeadset(participant_id)
-        self.digits = [1, 2, 3, 4] * 2 # testing experiment digits
+        self.digits = [1, 2, 3, 4, 5] # * 2 # testing experiment digits
         self.testing_experiment = True
 
         random.shuffle(self.digits)
@@ -43,23 +43,23 @@ Press 'Start' to begin the TESTING experiment.
     def real_experiment_start(self):
         self.clear_screen()
 
-        info_text = """ In 10 seconds the REAL experiment will start. """
+        info_text = """ In 20 seconds the REAL experiment will start. """
 
         info_label = tk.Label(self.root, text=info_text, font=('Helvetica', 18), justify='left', wraplength=750)
         info_label.pack(expand=True)
 
-        self.digits = [1, 2, 3, 4] * 10
+        self.digits = [1, 2, 3, 4, 5] * 5
         random.shuffle(self.digits)
 
         self.testing_experiment = False
         self.headset.annotate_event("real experiment start")
-        self.root.after(10000, self.show_blank_screen)
+        self.root.after(20000, self.show_blank_screen)
 
 
     def start_testing_experiment(self):
         self.clear_screen()
         self.headset.start_experiment()
-        self.root.after(3000, self.show_fixation_cross)  # Display the info screen for 1 minute
+        self.root.after(20000, self.show_fixation_cross)  # Display the info screen for 20 seconds
 
     def show_fixation_cross(self):
         if not self.digits:
