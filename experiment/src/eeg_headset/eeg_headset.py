@@ -20,7 +20,6 @@ class EEGHeadset:
         self._participant_id: str = participant_id
 
         self._save_dir_path: str = os.path.join(DATA_FOLDER_PATH, participant_id)
-        # Initialization of the library
         bacore.init(bacore.Version(2, 0, 0))
         self._create_dir_if_not_exist(DATA_FOLDER_PATH)
         self._create_dir_if_not_exist(self._save_dir_path)
