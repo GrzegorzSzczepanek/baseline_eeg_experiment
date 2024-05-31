@@ -13,10 +13,10 @@ This project aims to recognize digits from EEG signals. We use MNE-Python for EE
 
 ## Project Structure
 
-`extract_as_epochs.ipynb` - extracts epochs or ICA from raw EEG data for specific events related to digit recognition.
-`eda.ipynb` - basic EDA 
-`models.ipynb` - Machine Learning models in grid search
-`eeg_headset.py` fully functonal class for eeg data aquisition
+1. `extract_as_epochs.ipynb` - extracts epochs or ICA from raw EEG data for specific events related to digit recognition.
+2. `eda.ipynb` - basic EDA 
+3. `models.ipynb` - Machine Learning models in grid search
+4. `eeg_headset.py` fully functonal class for eeg data aquisition
 
 ## How to Run
 
