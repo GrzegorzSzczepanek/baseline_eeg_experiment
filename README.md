@@ -40,7 +40,7 @@ This project aims to recognize digits from EEG signals. We use MNE-Python for EE
    ```
    pip install -r requirements.txt
    ```
-6. Run the `extract_as_epochs.ipynb` script.
+6. Run the `main.py` script to start the experiment using brainaccess device.
 
 ## Functionality
 
