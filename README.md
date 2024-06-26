@@ -1,5 +1,3 @@
-Sure, here's an updated README.md with badges for the tech stack and instructions for setting up a virtual environment:
-
 # EEG Digit Recognition
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
