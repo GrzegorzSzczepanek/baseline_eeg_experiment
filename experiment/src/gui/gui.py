@@ -59,7 +59,7 @@ Press 'Start' to begin the TESTING experiment.
     def start_testing_experiment(self):
         self.clear_screen()
         self.headset.start_experiment()
-        self.root.after(20000, self.show_fixation_cross)  # Display the info screen for 20 seconds
+        self.root.after(20000, self.show_fixation_cross) 
 
     def show_fixation_cross(self):
         if not self.digits:
@@ -96,7 +96,7 @@ Press 'Start' to begin the TESTING experiment.
         self.headset.annotate_event("blank screen")
         print("event: blank screen")
 
-        blank_duration = random.randint(4000, 5000)  # Blank screen for 4 to 5 seconds
+        blank_duration = random.randint(4000, 5000) 
         self.root.after(blank_duration, self.show_fixation_cross)
 
     def clear_screen(self):
